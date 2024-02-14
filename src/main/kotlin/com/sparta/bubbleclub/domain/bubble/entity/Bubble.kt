@@ -1,5 +1,6 @@
 package com.sparta.bubbleclub.domain.bubble.entity
 
+import com.sparta.bubbleclub.domain.bubble.dto.request.UpdateBubbleRequest
 import com.sparta.bubbleclub.domain.member.entity.Member
 import com.sparta.bubbleclub.global.entity.BaseEntity
 import jakarta.persistence.*
@@ -21,12 +22,16 @@ class Bubble(
     var content: String = content
         private set
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     var member: Member = member
         private set
 
     fun updateContent(content: String) {
         this.content = content
+    }
+
+    fun update(request: UpdateBubbleRequest) {
+        content = request.content
     }
 }
