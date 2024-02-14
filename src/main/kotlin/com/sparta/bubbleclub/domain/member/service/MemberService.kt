@@ -18,9 +18,9 @@ class MemberService(
 
     fun signup(request: SignupRequest) {
 
-        check(memberRepository.existsByEmail(request.email)) { "email is already in use" }
+        require(request.password == request.passwordConfirm) { "password does not match" }
 
-        check(request.password == request.passwordConfirm) { "password does not match" }
+        check(!memberRepository.existsByEmail(request.email)) { "email is already in use" }
 
         val member = Member(
             email = request.email,
