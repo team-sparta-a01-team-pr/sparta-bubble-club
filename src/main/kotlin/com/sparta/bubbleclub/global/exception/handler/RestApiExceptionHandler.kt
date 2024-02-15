@@ -1,7 +1,7 @@
 package com.sparta.bubbleclub.global.exception.handler
 
-import com.sparta.bubbleclub.global.exception.code.CommonErrorCode
-import com.sparta.bubbleclub.global.exception.common.NoSuchEntityException
+import com.sparta.bubbleclub.global.exception.common.CommonErrorCode
+import com.sparta.bubbleclub.global.exception.common.RestApiException
 import com.sparta.bubbleclub.global.exception.response.ErrorResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -11,36 +11,28 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class RestApiExceptionHandler {
+
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @ExceptionHandler
     fun handleInternalServerException(exception: RuntimeException): ResponseEntity<ErrorResponse> {
-        val errorCode = CommonErrorCode.INTERNAL_SERVER_ERR
-        val response = ErrorResponse.of(errorCode)
-
-        logger.warn(errorCode.errorName, exception)
-
-        return ResponseEntity.status(errorCode.status).body(response)
+        logger.warn(exception::class.simpleName, exception)
+        return makeResponse(ErrorResponse.of(CommonErrorCode.INTERNAL_SERVER_ERR))
     }
 
     @ExceptionHandler
     fun handleMethodArgumentNotValidException(exception: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
-        val errorCode = CommonErrorCode.REQUEST_INVALID_ERR
-        val response = ErrorResponse.of(errorCode, exception.bindingResult)
-
-        logger.warn(errorCode.errorName, exception)
-
-        return ResponseEntity.status(errorCode.status).body(response)
+        logger.warn(exception::class.simpleName, exception)
+        return makeResponse(ErrorResponse.of(CommonErrorCode.INVALID_ARGS_ERR, exception.bindingResult))
     }
 
     @ExceptionHandler
-    fun handleNoSuchEntityException(exception: NoSuchEntityException): ResponseEntity<ErrorResponse> {
-        val errorCode = exception.errorCode
-        val response = ErrorResponse.of(errorCode)
-
-        logger.warn(errorCode.errorName, exception)
-
-        return ResponseEntity.status(errorCode.status).body(response)
+    fun handleRestApiException(exception: RestApiException): ResponseEntity<ErrorResponse> {
+        logger.warn(exception::class.simpleName, exception) // 추후 AOP 적용 예상
+        return makeResponse(ErrorResponse.of(exception.errorCode, exception.errorMessage))
     }
 
+    private fun makeResponse(response: ErrorResponse): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(response.code).body(response)
+    }
 }

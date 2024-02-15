@@ -38,6 +38,12 @@ class ErrorResponse(
             errors = null
         )
 
+        fun of(errorCode: ErrorCode, errorMessage: String) = ErrorResponse(
+            code = errorCode.status,
+            message = errorMessage,
+            errors = null
+        )
+
         fun of(errorCode: ErrorCode, bindingResult: BindingResult) = ErrorResponse(
             code = errorCode.status,
             message = errorCode.bodyMessage,
