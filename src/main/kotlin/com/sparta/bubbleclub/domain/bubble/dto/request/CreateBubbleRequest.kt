@@ -8,10 +8,12 @@ import jakarta.validation.constraints.Size
 data class CreateBubbleRequest(
     @field:NotBlank(message = "내용은 공백일 수 없습니다.")
     @field:Size(max = 300, message = "내용은 300자를 넘을 수 없습니다.")
-    val content: String,
-    val member: Member
+    val content: String
 ) {
 
-    fun toEntity() = Bubble(this.content, this.member)
+    fun toEntity(member: Member) = Bubble(
+        content = this.content,
+        member = member
+    )
 
 }
