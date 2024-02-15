@@ -4,6 +4,6 @@ import com.sparta.bubbleclub.global.exception.code.ErrorCode
 
 class NoSuchEntityException(
     override val errorCode: ErrorCode = CommonErrorCode.ENTITY_NOT_FOUND_ERR,
-    override val errorMessage: String = errorCode.bodyMessage,
-) : RestApiException(errorCode) {
+    override val errorMessage: String
+) : RestApiException(errorMessage) {
 }
