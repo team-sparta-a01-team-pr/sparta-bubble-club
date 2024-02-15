@@ -12,5 +12,5 @@ abstract class RestApiException : RuntimeException {
     constructor() : super()
 
     constructor(errorMessage: String) : super(errorMessage)
-    
+
 }
