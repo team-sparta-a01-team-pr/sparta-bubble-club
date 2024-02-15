@@ -33,14 +33,14 @@ class ErrorResponse(
 
     companion object {
         fun of(errorCode: ErrorCode) = ErrorResponse(
-            code = errorCode.status(),
-            message = errorCode.bodyMessage(),
+            code = errorCode.status,
+            message = errorCode.bodyMessage,
             errors = null
         )
 
         fun of(errorCode: ErrorCode, bindingResult: BindingResult) = ErrorResponse(
-            code = errorCode.status(),
-            message = errorCode.bodyMessage(),
+            code = errorCode.status,
+            message = errorCode.bodyMessage,
             errors = FieldError.of(bindingResult)
         )
     }

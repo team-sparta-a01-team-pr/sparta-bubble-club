@@ -18,9 +18,9 @@ class RestApiExceptionHandler {
         val errorCode = CommonErrorCode.INTERNAL_SERVER_ERR
         val response = ErrorResponse.of(errorCode)
 
-        logger.warn(errorCode.errorName(), exception)
+        logger.warn(errorCode.errorName, exception)
 
-        return ResponseEntity.status(errorCode.status()).body(response)
+        return ResponseEntity.status(errorCode.status).body(response)
     }
 
     @ExceptionHandler
@@ -28,9 +28,9 @@ class RestApiExceptionHandler {
         val errorCode = CommonErrorCode.REQUEST_INVALID_ERR
         val response = ErrorResponse.of(errorCode, exception.bindingResult)
 
-        logger.warn(errorCode.errorName(), exception)
+        logger.warn(errorCode.errorName, exception)
 
-        return ResponseEntity.status(errorCode.status()).body(response)
+        return ResponseEntity.status(errorCode.status).body(response)
     }
 
     @ExceptionHandler
@@ -38,9 +38,9 @@ class RestApiExceptionHandler {
         val errorCode = exception.errorCode
         val response = ErrorResponse.of(errorCode)
 
-        logger.warn(errorCode.errorName(), exception)
+        logger.warn(errorCode.errorName, exception)
 
-        return ResponseEntity.status(errorCode.status()).body(response)
+        return ResponseEntity.status(errorCode.status).body(response)
     }
 
 }
