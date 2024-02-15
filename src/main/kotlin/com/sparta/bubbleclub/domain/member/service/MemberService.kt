@@ -18,9 +18,9 @@ class MemberService(
 
     fun signup(request: SignupRequest) {
 
-        require(request.password == request.passwordConfirm) { "password does not match" }
+        require(request.password == request.passwordConfirm) { "비밀번호가 일치하지 않습니다." }
 
-        check(!memberRepository.existsByEmail(request.email)) { "email is already in use" }
+        check(!memberRepository.existsByEmail(request.email)) { "이미 사용 중인 이메일입니다." }
 
         val member = Member(
             email = request.email,
