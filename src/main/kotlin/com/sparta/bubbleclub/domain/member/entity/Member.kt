@@ -1,5 +1,6 @@
 package com.sparta.bubbleclub.domain.member.entity
 
+import com.sparta.bubbleclub.domain.member.dto.SignupRequest
 import jakarta.persistence.*
 
 @Entity
@@ -13,7 +14,7 @@ class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    var long: Long? = null
+    var id: Long? = null
         private set
 
     @Column(name = "email")
@@ -29,6 +30,3 @@ class Member(
         private set
 
 }
-
-
-
