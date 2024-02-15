@@ -3,10 +3,10 @@ package com.sparta.bubbleclub.domain.bubble.service
 import com.sparta.bubbleclub.domain.bubble.dto.request.CreateBubbleRequest
 import com.sparta.bubbleclub.domain.bubble.dto.request.UpdateBubbleRequest
 import com.sparta.bubbleclub.domain.bubble.repository.BubbleRepository
+import com.sparta.bubbleclub.global.exception.common.NoSuchEntityException
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
 class BubbleService(
@@ -38,5 +38,5 @@ class BubbleService(
     }
 
     private fun getByIdOrNull(bubbleId: Long) =
-        bubbleRepository.findByIdOrNull(bubbleId) ?: throw RuntimeException("NoSuchEntityException")
+        bubbleRepository.findByIdOrNull(bubbleId) ?: throw NoSuchEntityException(errorMessage = "해당 Bubble은 존재하지 않습니다.")
 }

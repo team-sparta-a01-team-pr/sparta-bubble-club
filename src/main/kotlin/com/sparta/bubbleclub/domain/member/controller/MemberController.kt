@@ -4,6 +4,7 @@ import com.sparta.bubbleclub.domain.member.dto.LoginRequest
 import com.sparta.bubbleclub.domain.member.dto.LoginResponse
 import com.sparta.bubbleclub.domain.member.dto.SignupRequest
 import com.sparta.bubbleclub.domain.member.service.MemberService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,7 +20,7 @@ class MemberController(
 ) {
 
     @PostMapping("/signup")
-    fun signup(@RequestBody request: SignupRequest): ResponseEntity<Unit> {
+    fun signup(@RequestBody @Valid request: SignupRequest): ResponseEntity<Unit> {
         memberService.signup(request)
         return ResponseEntity.created(URI.create(String.format("/api/v1/members/login"))).build()
     }
