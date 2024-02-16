@@ -27,10 +27,6 @@ class Bubble(
     var member: Member = member
         private set
 
-    fun updateContent(content: String) {
-        this.content = content
-    }
-
     fun update(request: UpdateBubbleRequest) {
         content = request.content
     }
