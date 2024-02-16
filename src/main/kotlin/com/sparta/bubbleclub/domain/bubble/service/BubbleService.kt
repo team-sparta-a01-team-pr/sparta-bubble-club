@@ -42,7 +42,6 @@ class BubbleService(
 
     @Transactional
     fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
-        keyword?.let { keywordService.increaseKeywordCount(keyword) }
         return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 
@@ -53,7 +52,6 @@ class BubbleService(
     @Transactional
     @Cacheable(value = ["bubbles"], key = "#keyword", condition = "#bubbleId == null")
     fun searchBubblesWithCaching(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
-        keyword?.let { keywordService.increaseKeywordCount(keyword) }
         return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 
