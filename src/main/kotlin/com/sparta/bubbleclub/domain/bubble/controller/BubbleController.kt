@@ -1,17 +1,18 @@
 package com.sparta.bubbleclub.domain.bubble.controller
 
 import com.sparta.bubbleclub.domain.bubble.dto.request.CreateBubbleRequest
+import com.sparta.bubbleclub.domain.bubble.dto.request.SearchKeywordRequest
 import com.sparta.bubbleclub.domain.bubble.dto.request.UpdateBubbleRequest
 import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
 import com.sparta.bubbleclub.domain.bubble.service.BubbleService
 import com.sparta.bubbleclub.global.security.web.dto.MemberPrincipal
 import jakarta.validation.Valid
+import jakarta.validation.constraints.Size
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
-import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.net.URI
 
@@ -42,12 +43,20 @@ class BubbleController(
         return ResponseEntity.ok().body(URI.create(String.format("/api/v1/bubbles/%d", id)))
     }
 
+    @GetMapping("/search")
+    fun searchBubbles(
+        @RequestParam bubbleId: Long?,
+        @Valid request: SearchKeywordRequest
+    ): ResponseEntity<Slice<BubbleResponse>> {
+        return ResponseEntity.ok()
+            .body(bubbleService.searchBubbles(bubbleId, request.keyword, PageRequest.of(0, 10)))
+    }
+
     @GetMapping
     fun getBubbles(
-        @RequestParam bubbleId: Long?,
-        @RequestParam(value = "keyword") keyword: String?
+        @RequestParam bubbleId: Long?
     ): ResponseEntity<Slice<BubbleResponse>> {
-        return ResponseEntity.ok().body(bubbleService.getBubblesByKeyword(bubbleId, keyword, PageRequest.of(0, 10)))
+        return ResponseEntity.ok().body(bubbleService.getBubbles(bubbleId, PageRequest.of(0, 10)))
     }
 
     @DeleteMapping("/{bubbleId}")
