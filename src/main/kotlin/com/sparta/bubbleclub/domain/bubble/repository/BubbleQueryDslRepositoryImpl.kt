@@ -32,7 +32,7 @@ class BubbleQueryDslRepositoryImpl(
             .innerJoin(bubble.member)
             .where(
                 ltBubbleId(bubbleId),
-                bubble.content.like("$keyword%")
+                isNullKeyword(keyword)
             )
             .orderBy(bubble.id.desc())
             .limit(pageSize + 1)
@@ -49,6 +49,15 @@ class BubbleQueryDslRepositoryImpl(
 
         return bubble.id.lt(bubbleId)
     }
+
+    private fun isNullKeyword(keyword: String?): BooleanExpression? {
+        if (keyword == null) {
+            return null
+        }
+
+        return bubble.content.like("$keyword%")
+    }
+
 
     // 마지막 페이지 확인
     private fun checkLastPage(pageable: Pageable, result: MutableList<BubbleResponse>): Slice<BubbleResponse> {

@@ -44,7 +44,7 @@ class BubbleController(
 
     @GetMapping
     fun getBubbles(
-        @RequestParam bubbleId: Long,
+        @RequestParam bubbleId: Long?,
         @RequestParam(value = "keyword") keyword: String?
     ): ResponseEntity<Slice<BubbleResponse>> {
         return ResponseEntity.ok().body(bubbleService.getBubblesByKeyword(bubbleId, keyword, PageRequest.of(0, 10)))

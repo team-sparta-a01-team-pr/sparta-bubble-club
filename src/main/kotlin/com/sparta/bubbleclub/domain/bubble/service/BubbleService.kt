@@ -38,12 +38,12 @@ class BubbleService(
         return bubble.id!!
     }
 
-    fun getBubblesByKeyword(bubbleId: Long, keyword: String?, pageable: Pageable): Slice<BubbleResponse> {
+    fun getBubblesByKeyword(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse> {
         return bubbleRepository.getBubblesByKeyword(bubbleId, keyword, pageable)
     }
 
-    @Cacheable(cacheNames = ["bubbles"], key = "#keyword.concat(#bubbleId)")
-    fun getBubblesByKeywordWithCaching(bubbleId: Long, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
+    @Cacheable(cacheNames = ["bubbles"], key = "(#keyword ?: '').concat(#bubbleId ?: '')")
+    fun getBubblesByKeywordWithCaching(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
         return bubbleRepository.getBubblesByKeyword(bubbleId, keyword, pageable)
     }
 
