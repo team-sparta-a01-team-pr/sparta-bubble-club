@@ -6,6 +6,7 @@ import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
 import com.sparta.bubbleclub.domain.bubble.service.BubbleService
 import com.sparta.bubbleclub.global.security.web.dto.MemberPrincipal
 import jakarta.validation.Valid
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
 import org.springframework.data.web.PageableDefault
@@ -44,10 +45,9 @@ class BubbleController(
     @GetMapping
     fun getBubbles(
         @RequestParam bubbleId: Long,
-        @RequestParam(value = "keyword") keyword: String?,
-        @PageableDefault(size = 10)  pageable: Pageable,
+        @RequestParam(value = "keyword") keyword: String?
     ): ResponseEntity<Slice<BubbleResponse>> {
-        return ResponseEntity.ok().body(bubbleService.getBubblesByKeyword(bubbleId, keyword, pageable))
+        return ResponseEntity.ok().body(bubbleService.getBubblesByKeyword(bubbleId, keyword, PageRequest.of(0, 10)))
     }
 
     @DeleteMapping("/{bubbleId}")
