@@ -4,6 +4,7 @@ import com.sparta.bubbleclub.domain.bubble.dto.request.CreateBubbleRequest
 import com.sparta.bubbleclub.domain.bubble.dto.request.UpdateBubbleRequest
 import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
 import com.sparta.bubbleclub.domain.bubble.repository.BubbleRepository
+import com.sparta.bubbleclub.domain.keyword.service.KeywordService
 import com.sparta.bubbleclub.domain.member.repository.MemberRepository
 import com.sparta.bubbleclub.global.exception.common.NoSuchEntityException
 import com.sparta.bubbleclub.global.security.web.dto.MemberPrincipal
@@ -17,7 +18,8 @@ import org.springframework.stereotype.Service
 @Service
 class BubbleService(
     private val bubbleRepository: BubbleRepository,
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val keywordService: KeywordService
 ) {
     @Transactional
     fun save(memberPrincipal: MemberPrincipal, request: CreateBubbleRequest): Long {
@@ -38,7 +40,9 @@ class BubbleService(
         return bubble.id!!
     }
 
+    @Transactional
     fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
+        keyword?.let { keywordService.increaseKeywordCount(keyword) }
         return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 
@@ -46,8 +50,10 @@ class BubbleService(
         return bubbleRepository.getBubbles(bubbleId, pageable)
     }
 
+    @Transactional
     @Cacheable(value = ["bubbles"], key = "#keyword", condition = "#bubbleId == null")
     fun searchBubblesWithCaching(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
+        keyword?.let { keywordService.increaseKeywordCount(keyword) }
         return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 
