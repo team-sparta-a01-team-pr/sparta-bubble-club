@@ -37,6 +37,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta") // querydsl
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta") // querydsl
 
