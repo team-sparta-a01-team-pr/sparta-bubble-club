@@ -8,6 +8,7 @@ import com.sparta.bubbleclub.domain.member.repository.MemberRepository
 import com.sparta.bubbleclub.global.exception.common.NoSuchEntityException
 import com.sparta.bubbleclub.global.security.web.dto.MemberPrincipal
 import jakarta.transaction.Transactional
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
 import org.springframework.data.repository.findByIdOrNull
@@ -38,6 +39,11 @@ class BubbleService(
     }
 
     fun getBubblesByKeyword(bubbleId: Long, keyword: String?, pageable: Pageable): Slice<BubbleResponse> {
+        return bubbleRepository.getBubblesByKeyword(bubbleId, keyword, pageable)
+    }
+
+    @Cacheable(cacheNames = ["bubbles"], key = "#keyword.concat(#bubbleId)")
+    fun getBubblesByKeywordWithCaching(bubbleId: Long, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
         return bubbleRepository.getBubblesByKeyword(bubbleId, keyword, pageable)
     }
 
