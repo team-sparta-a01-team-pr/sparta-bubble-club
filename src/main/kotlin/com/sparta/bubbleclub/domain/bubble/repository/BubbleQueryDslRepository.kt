@@ -5,5 +5,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
 
 interface BubbleQueryDslRepository {
-    fun getBubblesByKeyword(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>
+
+    fun getBubbles(bubbleId: Long?, pageable: Pageable): Slice<BubbleResponse>
+    fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>
 }

@@ -38,13 +38,22 @@ class BubbleService(
         return bubble.id!!
     }
 
-    fun getBubblesByKeyword(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse> {
-        return bubbleRepository.getBubblesByKeyword(bubbleId, keyword, pageable)
+    fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
+        return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 
-    @Cacheable(cacheNames = ["bubbles"], key = "(#keyword ?: '').concat(#bubbleId ?: '')")
-    fun getBubblesByKeywordWithCaching(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
-        return bubbleRepository.getBubblesByKeyword(bubbleId, keyword, pageable)
+    fun getBubbles(bubbleId: Long?, pageable: Pageable): Slice<BubbleResponse> {
+        return bubbleRepository.getBubbles(bubbleId, pageable)
+    }
+
+    @Cacheable(value = ["bubbles"], key = "#keyword", condition = "#bubbleId == null")
+    fun searchBubblesWithCaching(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
+        return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
+    }
+
+    @Cacheable(value = ["bubbles"], key = "''", condition = "#bubbleId == null")
+    fun getBubblesWithCaching(bubbleId: Long?, pageable: Pageable): Slice<BubbleResponse> {
+        return bubbleRepository.getBubbles(bubbleId, pageable)
     }
 
     @Transactional

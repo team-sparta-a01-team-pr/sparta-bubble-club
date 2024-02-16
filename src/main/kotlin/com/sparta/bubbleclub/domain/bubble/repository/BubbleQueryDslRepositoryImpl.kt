@@ -17,8 +17,30 @@ class BubbleQueryDslRepositoryImpl(
 
     private val bubble: QBubble = QBubble.bubble
 
+    override fun getBubbles(bubbleId: Long?, pageable: Pageable): Slice<BubbleResponse> {
+        val pageSize = pageable.pageSize.toLong()
+        val result = queryFactory.select(
+            Projections.constructor(
+                BubbleResponse::class.java,
+                bubble.id,
+                bubble.content,
+                bubble.member.nickname,
+                bubble.createdAt
+            )
+        ).from(bubble)
+            .innerJoin(bubble.member)
+            .where(
+                ltBubbleId(bubbleId)
+            )
+            .orderBy(bubble.id.desc())
+            .limit(pageSize + 1)
+            .fetch()
+
+        return checkLastPage(pageable, result)
+    }
+
     // 커서기반 페이징, keyword like 조건 (keyword 인기 검색어 )
-    override fun getBubblesByKeyword(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse> {
+    override fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse> {
         val pageSize = pageable.pageSize.toLong()
         val result = queryFactory.select(
             Projections.constructor(
@@ -57,7 +79,6 @@ class BubbleQueryDslRepositoryImpl(
 
         return bubble.content.like("$keyword%")
     }
-
 
     // 마지막 페이지 확인
     private fun checkLastPage(pageable: Pageable, result: MutableList<BubbleResponse>): Slice<BubbleResponse> {
