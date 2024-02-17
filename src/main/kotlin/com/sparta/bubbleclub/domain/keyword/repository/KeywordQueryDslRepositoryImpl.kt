@@ -1,8 +1,8 @@
 package com.sparta.bubbleclub.domain.keyword.repository
 
 import com.querydsl.jpa.impl.JPAQueryFactory
-import com.sparta.bubbleclub.domain.keyword.QKeywordStore
 import com.sparta.bubbleclub.domain.keyword.dto.response.KeywordResponse
+import com.sparta.bubbleclub.domain.keyword.entity.QKeywordStore
 
 class KeywordQueryDslRepositoryImpl(
     private val queryFactory: JPAQueryFactory
