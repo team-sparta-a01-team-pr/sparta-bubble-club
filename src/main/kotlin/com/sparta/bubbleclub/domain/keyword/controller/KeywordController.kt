@@ -1,6 +1,5 @@
 package com.sparta.bubbleclub.domain.keyword.controller
 
-import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
 import com.sparta.bubbleclub.domain.keyword.dto.response.KeywordResponse
 import com.sparta.bubbleclub.domain.keyword.service.KeywordService
 import org.springframework.http.ResponseEntity

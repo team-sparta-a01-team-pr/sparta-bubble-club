@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service
 class BubbleService(
     private val bubbleRepository: BubbleRepository,
     private val memberRepository: MemberRepository,
-    private val keywordService: KeywordService
 ) {
     @Transactional
     fun save(memberPrincipal: MemberPrincipal, request: CreateBubbleRequest): Long {
@@ -42,7 +41,6 @@ class BubbleService(
 
     @Transactional
     fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
-        keyword?.let { keywordService.increaseKeywordCount(keyword) }
         return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 
@@ -53,7 +51,6 @@ class BubbleService(
     @Transactional
     @Cacheable(value = ["bubbles"], key = "#keyword", condition = "#bubbleId == null")
     fun searchBubblesWithCaching(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
-        keyword?.let { keywordService.increaseKeywordCount(keyword) }
         return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 

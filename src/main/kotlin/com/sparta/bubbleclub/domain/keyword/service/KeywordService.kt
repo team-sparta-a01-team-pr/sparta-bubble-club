@@ -1,8 +1,8 @@
 package com.sparta.bubbleclub.domain.keyword.service
 
+import com.sparta.bubbleclub.domain.bubble.dto.request.SearchKeywordRequest
 import com.sparta.bubbleclub.domain.keyword.dto.response.KeywordResponse
 import com.sparta.bubbleclub.domain.keyword.repository.KeywordRepository
-import com.sparta.bubbleclub.global.exception.common.NoSuchEntityException
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -12,8 +12,8 @@ class KeywordService(
 ) {
 
     @Transactional
-    fun increaseKeywordCount(keyword: String) {
-        val keyword = keywordRepository.findByKeyword(keyword) ?: throw NoSuchEntityException(errorMessage = "해당하는 Keyword는 없습니다")
+    fun increaseKeywordCount(request: SearchKeywordRequest) {
+        val keyword = keywordRepository.findByKeyword(request.keyword) ?: keywordRepository.save(request.toEntity())
 
         keyword.increaseCount()
     }
