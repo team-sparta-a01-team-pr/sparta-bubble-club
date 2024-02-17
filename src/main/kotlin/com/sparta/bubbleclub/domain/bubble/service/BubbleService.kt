@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service
 class BubbleService(
     private val bubbleRepository: BubbleRepository,
     private val memberRepository: MemberRepository,
-    private val keywordService: KeywordService
 ) {
     @Transactional
     fun save(memberPrincipal: MemberPrincipal, request: CreateBubbleRequest): Long {
