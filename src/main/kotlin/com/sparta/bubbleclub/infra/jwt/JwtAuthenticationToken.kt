@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.security.jwt
+package com.sparta.bubbleclub.infra.jwt
 
 import com.sparta.bubbleclub.global.security.web.dto.MemberPrincipal
 import org.springframework.security.authentication.AbstractAuthenticationToken

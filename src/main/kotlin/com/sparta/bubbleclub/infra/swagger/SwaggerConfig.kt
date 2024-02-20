@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.config
+package com.sparta.bubbleclub.infra.swagger
 
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI

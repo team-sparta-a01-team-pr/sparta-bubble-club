@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.config
+package com.sparta.bubbleclub.infra.redis
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

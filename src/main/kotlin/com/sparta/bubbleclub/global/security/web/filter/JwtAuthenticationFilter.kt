@@ -1,7 +1,7 @@
 package com.sparta.bubbleclub.global.security.web.filter
 
-import com.sparta.bubbleclub.global.security.jwt.JwtAuthenticationToken
-import com.sparta.bubbleclub.global.security.jwt.JwtUtil
+import com.sparta.bubbleclub.infra.jwt.JwtAuthenticationToken
+import com.sparta.bubbleclub.infra.jwt.JwtUtil
 import com.sparta.bubbleclub.global.security.web.dto.MemberPrincipal
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

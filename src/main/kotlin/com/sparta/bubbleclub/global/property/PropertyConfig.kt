@@ -1,6 +1,7 @@
-package com.sparta.bubbleclub.global.config
+package com.sparta.bubbleclub.global.property
 
-import com.sparta.bubbleclub.global.security.jwt.JwtProperties
+import com.sparta.bubbleclub.infra.jwt.JwtProperties
+import com.sparta.bubbleclub.infra.redis.RedisProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
 

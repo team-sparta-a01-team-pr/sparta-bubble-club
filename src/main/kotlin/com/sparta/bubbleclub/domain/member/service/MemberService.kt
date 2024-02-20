@@ -7,7 +7,7 @@ import com.sparta.bubbleclub.domain.member.entity.Member
 import com.sparta.bubbleclub.domain.member.repository.MemberRepository
 import com.sparta.bubbleclub.global.exception.common.CustomIllegalArgumentException
 import com.sparta.bubbleclub.global.exception.member.DuplicateArgumentException
-import com.sparta.bubbleclub.global.security.jwt.JwtUtil
+import com.sparta.bubbleclub.infra.jwt.JwtUtil
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 

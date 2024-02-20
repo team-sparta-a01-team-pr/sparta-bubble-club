@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.security.web
+package com.sparta.bubbleclub.global.security.web.handler
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest
