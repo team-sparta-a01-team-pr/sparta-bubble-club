@@ -23,8 +23,8 @@
 | 최유민                                                       | 백승한                                                      | 박재은                                                        | 곽준선                                                        |
 |-----------------------------------------------------------|----------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------------|
 | ![](https://avatars.githubusercontent.com/u/115597692?v=4) | ![](https://avatars.githubusercontent.com/u/84169773?v=4) | ![](https://avatars.githubusercontent.com/u/149674839?v=4) | ![](https://avatars.githubusercontent.com/u/120253044?v=4) |
-| [@adorecamus](https://github.com/adorecamus)             | [@back-seung](https://github.com/back-seung)             | [@Re-eun](https://github.com/Re-eun)                       | [@rugii913](https://github.com/rugii913)                                              |
-| `팀장`, `로컬 캐시 적용`, `인증/인가`                                 | `CRUD`, `성능 테스트`, `인기 검색어 캐시`, `페이지네이션`, `Infra 구성`      | `CRUD`, `성능 테스트`, `인기 검색어 캐시`, `페이지네이션`                    | `로컬 캐시 적용`, `인증/인가`                                        |
+| [@adorecamus](https://github.com/adorecamus)              | [@back-seung](https://github.com/back-seung)             | [@Re-eun](https://github.com/Re-eun)                       | [@rugii913](https://github.com/rugii913)                   |
+| `팀장`, `로컬 캐시 적용`, `회원가입`, `성능 테스트`                        | `CRUD`, `성능 테스트`, `인기 검색어 캐시`, `페이지네이션`, `Infra 구성`      | `CRUD`, `성능 테스트`, `인기 검색어 캐시`, `페이지네이션`                    | `로컬 캐시 적용`, `인증/인가`, `성능 테스트`                                      |
 
 ## 프로젝트 패키지 구조
 ├── README.md
