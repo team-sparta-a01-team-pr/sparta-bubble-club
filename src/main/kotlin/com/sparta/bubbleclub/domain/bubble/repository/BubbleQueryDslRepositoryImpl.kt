@@ -4,10 +4,10 @@ import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
+import com.sparta.bubbleclub.domain.bubble.dto.response.CustomSliceImpl
 import com.sparta.bubbleclub.domain.bubble.entity.QBubble
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
-import org.springframework.data.domain.SliceImpl
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -39,8 +39,8 @@ class BubbleQueryDslRepositoryImpl(
         return checkLastPage(pageable, result)
     }
 
-    // 커서기반 페이징, keyword like 조건 (keyword 인기 검색어 )
-    override fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse> {
+    // 커서기반 페이징
+    override fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): CustomSliceImpl<BubbleResponse> {
         val pageSize = pageable.pageSize.toLong()
         val result = queryFactory.select(
             Projections.constructor(
@@ -81,15 +81,14 @@ class BubbleQueryDslRepositoryImpl(
     }
 
     // 마지막 페이지 확인
-    private fun checkLastPage(pageable: Pageable, result: MutableList<BubbleResponse>): Slice<BubbleResponse> {
+    private fun checkLastPage(pageable: Pageable, result: MutableList<BubbleResponse>): CustomSliceImpl<BubbleResponse> {
 
         var hasNext = false
         if(result.size > pageable.pageSize ) {
             result.removeAt(result.size-1)
             hasNext = true
         }
-
-        return SliceImpl<BubbleResponse>(result, pageable, hasNext)
+        return CustomSliceImpl<BubbleResponse>(result, pageable.pageSize, hasNext)
     }
 
 }

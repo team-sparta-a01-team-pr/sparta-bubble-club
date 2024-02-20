@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 
 data class SignupRequest(
-    @field:Pattern(regexp = "^(.+)@(\\S+) \$.", message = "올바른 이메일 형식을 입력해주세요")
+    @field:Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "올바른 이메일 형식을 입력해주세요")
     val email: String,
 
     @field:Pattern(
