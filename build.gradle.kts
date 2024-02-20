@@ -41,11 +41,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta") // querydsl
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta") // querydsl
+    implementation ("org.springframework.boot:spring-boot-starter-data-redis") // redis
 
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
-    runtimeOnly("com.h2database:h2")
-//    runtimeOnly("com.mysql:mysql-connector-j")
+//    runtimeOnly("com.h2database:h2")
+    runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

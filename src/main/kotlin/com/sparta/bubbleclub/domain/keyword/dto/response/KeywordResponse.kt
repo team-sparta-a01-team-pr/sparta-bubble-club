@@ -7,5 +7,6 @@ data class KeywordResponse(
 ) {
     companion object {
         fun toResponse(keywordStore: KeywordStore) = KeywordResponse(keyword = keywordStore.keyword)
+        fun toResponse(keywordStore: String) = KeywordResponse(keyword = keywordStore)
     }
 }

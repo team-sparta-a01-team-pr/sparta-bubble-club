@@ -2,6 +2,7 @@ package com.sparta.bubbleclub.domain.bubble.controller
 
 import com.sparta.bubbleclub.domain.bubble.dto.request.SearchKeywordRequest
 import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
+import com.sparta.bubbleclub.domain.bubble.dto.response.CustomSliceImpl
 import com.sparta.bubbleclub.domain.bubble.service.BubbleService
 import com.sparta.bubbleclub.domain.keyword.service.KeywordService
 import jakarta.validation.Valid
@@ -24,7 +25,7 @@ class BubbleControllerV2(
     fun searchBubbles(
         @RequestParam bubbleId: Long?,
         @Valid request: SearchKeywordRequest
-    ): ResponseEntity<Slice<BubbleResponse>> {
+    ): ResponseEntity<CustomSliceImpl<BubbleResponse>> {
         keywordService.increaseKeywordCount(request)
         val response = bubbleService.searchBubblesWithCaching(bubbleId, request.keyword, PageRequest.of(0, 10))
         return ResponseEntity.ok().body(response)

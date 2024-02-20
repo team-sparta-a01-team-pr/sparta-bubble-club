@@ -1,5 +1,6 @@
 package com.sparta.bubbleclub.domain.bubble.dto.response
 
+import java.io.Serializable
 import java.time.ZonedDateTime
 
 data class BubbleResponse(
@@ -7,4 +8,4 @@ data class BubbleResponse(
     val content: String,
     val nickname: String,
     val createdAt: ZonedDateTime
-)
+): Serializable
