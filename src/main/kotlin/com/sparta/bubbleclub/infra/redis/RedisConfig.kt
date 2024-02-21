@@ -32,8 +32,7 @@ class RedisConfig(
         return redisTemplate
     }
 
-
-    @Bean
+    @Bean(name = ["cacheManager"])
     fun redisCacheManager(): CacheManager {
         val cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
             .serializeKeysWith(

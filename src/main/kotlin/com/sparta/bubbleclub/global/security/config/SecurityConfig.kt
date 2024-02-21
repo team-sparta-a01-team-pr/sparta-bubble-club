@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.security
+package com.sparta.bubbleclub.global.security.config
 
 import com.sparta.bubbleclub.global.security.web.filter.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean

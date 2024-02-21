@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.querydsl
+package com.sparta.bubbleclub.infra.querydsl
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager

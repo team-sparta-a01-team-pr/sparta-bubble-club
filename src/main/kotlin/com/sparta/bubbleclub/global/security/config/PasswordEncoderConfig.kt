@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.config
+package com.sparta.bubbleclub.global.security.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

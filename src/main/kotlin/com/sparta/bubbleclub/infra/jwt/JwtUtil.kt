@@ -1,4 +1,4 @@
-package com.sparta.bubbleclub.global.security.jwt
+package com.sparta.bubbleclub.infra.jwt
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jws
