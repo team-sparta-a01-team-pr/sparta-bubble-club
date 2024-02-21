@@ -34,12 +34,10 @@ class KeywordService(
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 1000 * 60 * 10)
+    @Scheduled(fixedDelay = 1000 * 60 * 10, initialDelay = 1000 * 60 * 10)
     fun flushAllCache() {
         zSetOperations.reverseRangeWithScores(POPULAR_KEYWORDS, 0, 9)
-            .let {
-                it?.map { keyword -> KeywordStore(keyword.value!!, keyword.score!!.toLong(), ZonedDateTime.now()) }
-            }
+            ?.map { KeywordStore(it.value!!, it.score!!.toLong(), ZonedDateTime.now()) }
             ?.also { keywords -> keywordRepository.saveAll(keywords) }
 
         zSetOperations.removeRange(POPULAR_KEYWORDS, 0, zSetOperations.size(POPULAR_KEYWORDS)?.minus(1) ?: 0)
