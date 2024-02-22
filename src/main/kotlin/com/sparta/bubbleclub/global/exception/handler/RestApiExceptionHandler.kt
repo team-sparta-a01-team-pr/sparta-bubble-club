@@ -1,6 +1,7 @@
 package com.sparta.bubbleclub.global.exception.handler
 
 import com.sparta.bubbleclub.global.exception.common.CommonErrorCode
+import com.sparta.bubbleclub.global.exception.common.HasNoPermissionException
 import com.sparta.bubbleclub.global.exception.common.RestApiException
 import com.sparta.bubbleclub.global.exception.response.ErrorResponse
 import org.slf4j.LoggerFactory
@@ -30,6 +31,12 @@ class RestApiExceptionHandler {
     fun handleRestApiException(exception: RestApiException): ResponseEntity<ErrorResponse> {
         logger.warn(exception::class.simpleName, exception) // 추후 AOP 적용 예상
         return makeResponse(ErrorResponse.of(exception.errorCode, exception.errorMessage))
+    }
+
+    @ExceptionHandler
+    fun handleHasNoPermissionException(exception: HasNoPermissionException): ResponseEntity<ErrorResponse> {
+        logger.warn(exception::class.simpleName, exception)
+        return makeResponse(ErrorResponse.of(exception.errorCode))
     }
 
     private fun makeResponse(response: ErrorResponse): ResponseEntity<ErrorResponse> {

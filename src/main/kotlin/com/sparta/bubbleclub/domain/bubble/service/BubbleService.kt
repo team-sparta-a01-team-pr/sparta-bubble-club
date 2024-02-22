@@ -6,6 +6,7 @@ import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
 import com.sparta.bubbleclub.domain.bubble.dto.response.CustomSliceImpl
 import com.sparta.bubbleclub.domain.bubble.repository.BubbleRepository
 import com.sparta.bubbleclub.domain.member.repository.MemberRepository
+import com.sparta.bubbleclub.global.exception.common.HasNoPermissionException
 import com.sparta.bubbleclub.global.exception.common.NoSuchEntityException
 import com.sparta.bubbleclub.global.security.web.dto.MemberPrincipal
 import com.sparta.bubbleclub.infra.redis.CacheKey.GET_ALL_BUBBLES
@@ -14,7 +15,6 @@ import jakarta.transaction.Transactional
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Slice
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -37,8 +37,12 @@ class BubbleService(
 
     @Transactional
     @CacheEvict(value = [GET_ALL_BUBBLES, GET_BUBBLES_BY_KEYWORD], allEntries = true)
-    fun update(bubbleId: Long, request: UpdateBubbleRequest): Long {
+    fun update(bubbleId: Long, request: UpdateBubbleRequest, memberPrincipal: MemberPrincipal): Long {
         val bubble = getByIdOrNull(bubbleId)
+
+        if (bubble.id != memberPrincipal.id) {
+            throw HasNoPermissionException()
+        }
 
         bubble.update(request)
 
@@ -46,11 +50,11 @@ class BubbleService(
     }
 
     @Transactional
-    fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): Slice<BubbleResponse>? {
+    fun searchBubbles(bubbleId: Long?, keyword: String?, pageable: Pageable): CustomSliceImpl<BubbleResponse>? {
         return bubbleRepository.searchBubbles(bubbleId, keyword, pageable)
     }
 
-    fun getBubbles(bubbleId: Long?, pageable: Pageable): Slice<BubbleResponse> {
+    fun getBubbles(bubbleId: Long?, pageable: Pageable): CustomSliceImpl<BubbleResponse>? {
         return bubbleRepository.getBubbles(bubbleId, pageable)
     }
 
@@ -60,14 +64,17 @@ class BubbleService(
     }
 
     @Cacheable(value = [GET_ALL_BUBBLES], condition = "#bubbleId == null")
-    fun getBubblesWithCaching(bubbleId: Long?, pageable: Pageable): Slice<BubbleResponse> {
+    fun getBubblesWithCaching(bubbleId: Long?, pageable: Pageable): CustomSliceImpl<BubbleResponse>? {
         return bubbleRepository.getBubbles(bubbleId, pageable)
     }
 
     @Transactional
     @CacheEvict(value = [GET_ALL_BUBBLES, GET_BUBBLES_BY_KEYWORD], allEntries = true)
-    fun delete(bubbleId: Long) {
+    fun delete(bubbleId: Long, memberPrincipal: MemberPrincipal) {
         val bubble = getByIdOrNull(bubbleId)
+        if (bubble.id != memberPrincipal.id) {
+            throw HasNoPermissionException()
+        }
 
         bubbleRepository.delete(bubble)
     }
