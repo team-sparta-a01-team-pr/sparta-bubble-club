@@ -60,12 +60,18 @@ class MemberServiceUnitTest : BehaviorSpec({
     Given("회원 가입 가능한 회원 정보를 입력하고") {
         val successSignupRequest = SignupRequest(nonExistingEmail, password, password, nickname)
         every { memberRepository.existsByEmail(nonExistingEmail) } returns false
-        every { memberRepository.save(any()) } returns Member(password, nonExistingEmail, nickname) /* 작성하기 애매한 부분 */
+
+        val signedupMember = Member(passwordEncoder.encode(successSignupRequest.password), nonExistingEmail, nickname)
+        every { memberRepository.save(any()) } returns signedupMember
 
         Then("회원 가입을 시도하면 회원 가입에 성공한다.") {
             shouldNotThrowAny {
                 memberService.signup(successSignupRequest)
             }
+
+            passwordEncoder.matches(successSignupRequest.password, signedupMember.password) shouldBe true
+            signedupMember.email shouldBe successSignupRequest.email
+            signedupMember.nickname shouldBe successSignupRequest.nickname
         }
     }
 
