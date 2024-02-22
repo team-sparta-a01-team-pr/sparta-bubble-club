@@ -22,6 +22,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
+      - name: Write application-test.yml
+        run: \
+          touch ./src/test/resources/application-test.yml
+          echo "${{env.APPLICATION_TEST_YML}}" > ./src/test/resources/application-test.yml
+
       - name: Setup Java JDK 17 Adopt
         uses: actions/setup-java@v4.0.0
         with:
