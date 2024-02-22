@@ -21,7 +21,7 @@ class KeywordRepositoryTest(
 ) : BehaviorSpec({
 
     Given("15개의 검색어가 목록에 있을 때") {
-        val keywordList = KeywordFixture.keywordList
+        val keywordList = KeywordFixture.keywordStoresFromQueryDsl
         keywordRepository.saveAll(keywordList)
 
         val sortedList = keywordList.sortedByDescending { it.count }
