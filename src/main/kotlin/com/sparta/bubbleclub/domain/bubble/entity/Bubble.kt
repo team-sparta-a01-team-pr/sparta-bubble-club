@@ -22,10 +22,9 @@ class Bubble(
     var content: String = content
         private set
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "member_id")
     var member: Member = member
-        private set
 
     fun update(request: UpdateBubbleRequest) {
         content = request.content
