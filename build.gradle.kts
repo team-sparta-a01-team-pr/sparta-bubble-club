@@ -28,6 +28,9 @@ repositories {
 }
 
 val queryDslVersion = "5.0.0"
+val kotestVersion = "5.5.5"
+val mockkVersion = "1.13.8"
+
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -45,10 +48,16 @@ dependencies {
 
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.3")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.3")
-//    runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion") // kotest
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion") // kotest
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.3") // kotest
+    testImplementation("io.mockk:mockk:$mockkVersion") // mockk
+    testImplementation("com.appmattus.fixture:fixture:1.2.0")
+    testImplementation("com.ninja-squad:springmockk:4.0.2") // // SpringMockK(Ninja-Squad)
+    testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
