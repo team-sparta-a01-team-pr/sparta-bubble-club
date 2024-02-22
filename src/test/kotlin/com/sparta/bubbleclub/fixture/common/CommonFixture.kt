@@ -18,7 +18,7 @@ object CommonFixture {
 
     // page
     val firstPage = PageRequest.of(0, 10)
-    val nonFirstPage = PageRequest.of(1, 10)
+    val nonFirstPage = PageRequest.of(0, 10)
 
     // security
     val memberPrincipal = fixture<MemberPrincipal> {
