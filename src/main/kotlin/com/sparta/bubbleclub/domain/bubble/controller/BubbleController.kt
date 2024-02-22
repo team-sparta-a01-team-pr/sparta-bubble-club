@@ -36,9 +36,10 @@ class BubbleController(
     @PatchMapping("/{bubbleId}")
     fun updateBubble(
         @PathVariable bubbleId: Long,
-        @RequestBody @Valid request: UpdateBubbleRequest
+        @RequestBody @Valid request: UpdateBubbleRequest,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal,
     ): ResponseEntity<URI> {
-        val id = bubbleService.update(bubbleId, request)
+        val id = bubbleService.update(bubbleId, request, memberPrincipal)
 
         return ResponseEntity.ok().body(URI.create(String.format("/api/v1/bubbles/%d", id)))
     }
@@ -62,8 +63,11 @@ class BubbleController(
     }
 
     @DeleteMapping("/{bubbleId}")
-    fun deleteBubble(@PathVariable bubbleId: Long): ResponseEntity<Unit> {
-        bubbleService.delete(bubbleId)
+    fun deleteBubble(
+        @PathVariable bubbleId: Long,
+        @AuthenticationPrincipal memberPrincipal: MemberPrincipal
+    ): ResponseEntity<Unit> {
+        bubbleService.delete(bubbleId, memberPrincipal)
 
         return ResponseEntity.noContent().build()
     }

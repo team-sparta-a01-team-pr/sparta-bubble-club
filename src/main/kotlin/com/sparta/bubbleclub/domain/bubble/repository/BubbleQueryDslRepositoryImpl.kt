@@ -7,7 +7,6 @@ import com.sparta.bubbleclub.domain.bubble.dto.response.BubbleResponse
 import com.sparta.bubbleclub.domain.bubble.dto.response.CustomSliceImpl
 import com.sparta.bubbleclub.domain.bubble.entity.QBubble
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Slice
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -17,7 +16,7 @@ class BubbleQueryDslRepositoryImpl(
 
     private val bubble: QBubble = QBubble.bubble
 
-    override fun getBubbles(bubbleId: Long?, pageable: Pageable): Slice<BubbleResponse> {
+    override fun getBubbles(bubbleId: Long?, pageable: Pageable): CustomSliceImpl<BubbleResponse> {
         val pageSize = pageable.pageSize.toLong()
         val result = queryFactory.select(
             Projections.constructor(
@@ -36,7 +35,7 @@ class BubbleQueryDslRepositoryImpl(
             .limit(pageSize + 1)
             .fetch()
 
-        return checkLastPage(pageable, result)
+        return checkLastPage(result, pageable)
     }
 
     // 커서기반 페이징
@@ -60,7 +59,7 @@ class BubbleQueryDslRepositoryImpl(
             .limit(pageSize + 1)
             .fetch()
 
-        return checkLastPage(pageable, result)
+        return checkLastPage(result, pageable)
     }
 
     // id 보다 작은 bubbles
@@ -81,9 +80,10 @@ class BubbleQueryDslRepositoryImpl(
     }
 
     // 마지막 페이지 확인
-    private fun checkLastPage(pageable: Pageable, result: MutableList<BubbleResponse>): CustomSliceImpl<BubbleResponse> {
+    private fun checkLastPage(result: MutableList<BubbleResponse>, pageable: Pageable): CustomSliceImpl<BubbleResponse> {
 
         var hasNext = false
+
         if(result.size > pageable.pageSize ) {
             result.removeAt(result.size-1)
             hasNext = true

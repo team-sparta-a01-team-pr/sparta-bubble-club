@@ -35,7 +35,7 @@ class MemberService(
 
     fun login(request: LoginRequest): LoginResponse? {
         val foundMember = memberRepository.findByEmail(request.email) ?: throw CustomIllegalArgumentException(errorMessage = "일치 회원 없음")
-        check(passwordEncoder.matches(request.password, foundMember.password)) { throw IllegalArgumentException("일치 회원 없음") }
+        check(passwordEncoder.matches(request.password, foundMember.password)) { throw CustomIllegalArgumentException(errorMessage = "일치 회원 없음") }
 
         return LoginResponse(jwtUtil.generateAccessToken(foundMember.id.toString(), foundMember.email))
     }
