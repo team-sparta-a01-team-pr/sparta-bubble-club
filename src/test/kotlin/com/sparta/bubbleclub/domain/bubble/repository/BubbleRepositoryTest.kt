@@ -42,7 +42,6 @@ class BubbleRepositoryTest(
 
         When("버블 데이터가 있으면") {
             val list = BubbleFixture.bubbleList
-            println(list)
 
             bubbleRepository.saveAll(list)
             entityManager.flush()
@@ -50,8 +49,7 @@ class BubbleRepositoryTest(
             val result = bubbleRepository.getBubbles(null, CommonFixture.firstPage)
 
             Then("올바른 Slice가 반환된다.") {
-                println(result.content)
-                result.content.size shouldBe list.size
+                list.zip(result.sortedBy { it.id }) { a, b -> a.id shouldBe b.id }
             }
         }
     }
