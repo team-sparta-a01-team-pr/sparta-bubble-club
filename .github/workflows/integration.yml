@@ -26,7 +26,7 @@ jobs:
         run: touch ./src/test/resources/application-test.yml
 
       - name: Write application-test.yml
-        run: echo "${{env.APPLICATION_TEST_YML}}" > ./src/test/resources/application-test.yml
+        run: echo "${{ secrets.APPLICATION_TEST_YML }}" > ./src/test/resources/application-test.yml
 
       - name: Setup Java JDK 17 Adopt
         uses: actions/setup-java@v4.0.0
