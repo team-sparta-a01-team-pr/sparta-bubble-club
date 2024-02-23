@@ -14,14 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Make directory for application-test.yml
-        run: mkdir -p ./src/test/resources
+      - name: Make directory for application.yml
+        run: mkdir -p ./src/main/resources
 
-      - name: Make application-test.yml
-        run: touch ./src/test/resources/application-test.yml
+      - name: Make application.yml
+        run: touch ./src/main/resources/application.yml
 
-      - name: Write application-test.yml
-        run: echo "${{ secrets.APPLICATION_YML }}" > ./src/test/resources/application-test.yml
+      - name: Write application.yml
+        run: echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
 
       - name: Setup Java JDK 17 Adopt
         uses: actions/setup-java@v4.0.0
